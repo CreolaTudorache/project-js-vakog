@@ -180,11 +180,11 @@ const data = [
   let smellCount = 0;
   let tasteCount = 0;
   let wrongCount = 0;
-  let visualAnswer = 0;
-  let audioAnswer =0;
-  let kinestezicAnswer =0;
-  let smellAnswer =0;
-  let tasteAnswer =0;
+  let visualAnswer = false;
+  let audioAnswer = false;
+  let kinestezicAnswer = false;
+  let smellAnswer = false;
+  let tasteAnswer = false;
   let total = 0;
   let selectedAnswer;
 
@@ -196,11 +196,11 @@ const data = [
    smellCount = 0;
    tasteCount = 0;
    wrongCount = 0;
-    visualAnswer = 0;
-   audioAnswer =0;
-   kinestezicAnswer =0;
-   smellAnswer =0;
-   tasteAnswer =0;
+    visualAnswer = false;
+   audioAnswer = false;
+   kinestezicAnswer =false;
+   smellAnswer = false;
+   tasteAnswer = false ;
    total = 0;
   selectedAnswer;
   showQuestion(qIndex);
@@ -213,7 +213,7 @@ const data = [
   })
 
   const showResult = () => {
-    if (id > 15) {
+    
        
     resultScreen.style.display = "block"
     quizScreen.style.display = "none"
@@ -222,13 +222,13 @@ const data = [
     resultScreen.querySelector(".kinestezic").textContent = `Kinestezic answers: ${kinestezicCount}`
     resultScreen.querySelector(".smell").textContent = `Smell answers: ${smellCount}`
     resultScreen.querySelector(".taste").textContent = `Taste answers: ${tasteCount}`
-  }
-  else playAgain ()
+  
+
 }
 
   const showQuestion = (qNumber) => {
-    if(qIndex===data.lenght) return showResult();
-    selectedAnswer === null;
+    
+    selectedAnswer = null;
     question.textContent = data[qNumber].question;
     answersContainer.innerHTML = data[qNumber].answers
       .map(
@@ -241,8 +241,9 @@ const data = [
     `
       )
       .join("");
-  selectAnswer ()
-     
+  if(qNumber > data.length--) showResult();
+  selectAnswer();
+  submitAnswer();
   };
 
   const selectAnswer = () => {
@@ -252,30 +253,26 @@ const data = [
       });
     });
   };
-  selectAnswer ();
   
-  const submitAnswer =() => {
+  const submitAnswer = () => {
     
       submit.addEventListener ("click", () => {
         if (selectedAnswer!==null) {
-          visualAnswer=== "true" ? visualCount++ : wrongCount++ 
-        audioAnswer=== "true" ? audioCount++ : wrongCount++ 
-        kinestezicAnswer=== "true" ? kinestezicCount++ : wrongCount++ 
-        tasteAnswer=== "true" ? tasteCount++ : wrongCount++ 
-        smellAnswer=== "true" ? smellCount++ : wrongCount++
+          selectedAnswer.isVisual === true ? visualCount++ : wrongCount++ 
+          selectedAnswer.isAudio=== true ? audioCount++ : wrongCount++ 
+          selectedAnswer.isKinestezic=== true ? kinestezicCount++ : wrongCount++ 
+          selectedAnswer.isTaste=== true ? tasteCount++ : wrongCount++ 
+          selectedAnswer.isSmell=== true ? smellCount++ : wrongCount++
         qIndex++;
         showQuestion(qIndex);
       }
                       
-    else alert ("Selecteaza un raspuns");
+    else if(selectedAnswer===null) alert ("Selecteaza un raspuns");
       });
     
   
     }
- 
   
-  submitAnswer ()
   showQuestion(qIndex);
-  showResult ()
  
   
